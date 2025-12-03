@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+detected_images/
+output/
