@@ -1,21 +1,30 @@
 @echo off
-chcp 65001 >nul
-setlocal EnableDelayedExpansion
+setlocal
 
-REM 必要なライブラリのチェックとインストール
+echo 起動中...
+
+REM Pythonの確認
+python --version >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [ERROR] Pythonが見つかりません。
+    echo Pythonをインストールし、PATHに通してください。
+    pause
+    exit /b
+)
+
+REM ライブラリの確認
 python -c "import mediapipe" >nul 2>&1
-if !errorlevel! neq 0 (
+if %errorlevel% neq 0 (
     echo [INFO] 必要なライブラリ (mediapipe) が見つかりません。インストールします...
     pip install mediapipe opencv-python
-    if !errorlevel! neq 0 (
+    if %errorlevel% neq 0 (
         echo [ERROR] ライブラリのインストールに失敗しました。
-        echo Pythonまたはpipがインストールされているか確認してください。
         pause
         exit /b
     )
 )
 
-REM 入力フォルダ（カレントディレクトリ）と出力フォルダの設定
+REM 設定
 set INPUT_DIR=.
 set OUTPUT_DIR=detected_images
 
