@@ -23,7 +23,7 @@ def detect_photographer(input_dir, output_dir, confidence_threshold=0.5):
 
         # Iterate through files in the input directory
         image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.webp'}
-        files = [f for f in os.listdir(input_dir) if os.path.splitext(f)[1].lower() in image_extensions]
+        files = [f for f in os.listdir(input_dir) if os.path.isfile(os.path.join(input_dir, f)) and os.path.splitext(f)[1].lower() in image_extensions]
         
         print(f"Found {len(files)} images in {input_dir}")
 

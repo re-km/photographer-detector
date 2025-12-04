@@ -1,24 +1,28 @@
 @echo off
 setlocal
 
-REM 入力フォルダと出力フォルダの設定
-set INPUT_DIR=input_images
-set OUTPUT_DIR=detected_images
-
-REM フォルダが存在しない場合は作成（入力フォルダはユーザーが用意する必要があるため警告）
-if not exist "%INPUT_DIR%" (
-    echo [ERROR] 入力フォルダ "%INPUT_DIR%" が見つかりません。
-    echo フォルダを作成し、画像を配置してください。
-    pause
-    exit /b
+REM 必要なライブラリのチェックとインストール
+python -c "import mediapipe" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [INFO] 必要なライブラリ (mediapipe) が見つかりません。インストールします...
+    pip install mediapipe opencv-python
+    if %errorlevel% neq 0 (
+        echo [ERROR] ライブラリのインストールに失敗しました。
+        pause
+        exit /b
+    )
 )
+
+REM 入力フォルダ（カレントディレクトリ）と出力フォルダの設定
+set INPUT_DIR=.
+set OUTPUT_DIR=detected_images
 
 if not exist "%OUTPUT_DIR%" (
     mkdir "%OUTPUT_DIR%"
 )
 
 echo 画像抽出を開始します...
-echo 入力: %INPUT_DIR%
+echo 入力: カレントディレクトリ
 echo 出力: %OUTPUT_DIR%
 
 python detect_photographer.py "%INPUT_DIR%" "%OUTPUT_DIR%"

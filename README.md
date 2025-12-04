@@ -25,12 +25,16 @@ python detect_photographer.py [入力フォルダ] [出力フォルダ]
 
 ### バッチファイルでの実行 (Windows)
 
-付属の `run_detector.bat` をダブルクリックするだけで実行できます。
-初回実行時は `input_images` フォルダがない場合エラーになりますが、フォルダを作成して画像を入れれば動作します。
+画像が入っているフォルダに `run_detector.bat` と `detect_photographer.py` を置き、`run_detector.bat` をダブルクリックしてください。
+そのフォルダ内の画像をスキャンし、検出された画像を `detected_images` フォルダにコピーします。
+
+※ 初回実行時に必要なライブラリがない場合は、自動的にインストールされます。
 
 ### 例
 
-`input_images` フォルダ内の画像をスキャンし、検出された画像を `detected_images` フォルダにコピーする場合:
+`photos` フォルダ内の画像を処理したい場合:
+1. `photos` フォルダの中に `run_detector.bat` と `detect_photographer.py` をコピーします。
+2. `run_detector.bat` を実行します。
 
 ```bash
 python detect_photographer.py input_images detected_images
