@@ -1,13 +1,15 @@
 @echo off
-setlocal
+chcp 65001 >nul
+setlocal EnableDelayedExpansion
 
 REM 必要なライブラリのチェックとインストール
 python -c "import mediapipe" >nul 2>&1
-if %errorlevel% neq 0 (
+if !errorlevel! neq 0 (
     echo [INFO] 必要なライブラリ (mediapipe) が見つかりません。インストールします...
     pip install mediapipe opencv-python
-    if %errorlevel% neq 0 (
+    if !errorlevel! neq 0 (
         echo [ERROR] ライブラリのインストールに失敗しました。
+        echo Pythonまたはpipがインストールされているか確認してください。
         pause
         exit /b
     )
