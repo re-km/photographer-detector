@@ -6,25 +6,32 @@ echo 起動中...
 
 REM Pythonの確認
 python --version >nul 2>&1
-if %errorlevel% neq 0 (
-    echo [ERROR] Pythonが見つかりません。
-    echo Pythonをインストールし、PATHに通してください。
-    pause
-    exit /b
-)
+if %errorlevel% neq 0 goto NoPython
 
 REM ライブラリの確認
 python -c "import mediapipe" >nul 2>&1
-if %errorlevel% neq 0 (
-    echo [INFO] 必要なライブラリ (mediapipe) が見つかりません。インストールします...
-    pip install mediapipe opencv-python
-    if %errorlevel% neq 0 (
-        echo [ERROR] ライブラリのインストールに失敗しました。
-        pause
-        exit /b
-    )
-)
+if %errorlevel% neq 0 goto InstallLib
 
+goto Run
+
+:InstallLib
+echo [INFO] 必要なライブラリ (mediapipe) が見つかりません。インストールします...
+pip install mediapipe opencv-python
+if %errorlevel% neq 0 goto InstallFail
+goto Run
+
+:NoPython
+echo [ERROR] Pythonが見つかりません。
+echo Pythonをインストールし、PATHに通してください。
+pause
+exit /b
+
+:InstallFail
+echo [ERROR] ライブラリのインストールに失敗しました。
+pause
+exit /b
+
+:Run
 REM 設定
 set INPUT_DIR=.
 set OUTPUT_DIR=detected_images
