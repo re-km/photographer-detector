@@ -7,7 +7,7 @@ from pathlib import Path
 
 def detect_photographer(input_dir, output_dir, confidence_threshold=0.5):
     """
-    Detects faces or hands in images within the input directory and copies them to the output directory.
+    Detects faces or hands in images within the input directory and moves them to the output directory.
     """
     
     # Initialize MediaPipe solutions
@@ -65,8 +65,8 @@ def detect_photographer(input_dir, output_dir, confidence_threshold=0.5):
 
                 if detected:
                     output_path = os.path.join(output_dir, filename)
-                    shutil.copy2(filepath, output_path)
-                    print(f"Copied to: {output_path}")
+                    shutil.move(filepath, output_path)
+                    print(f"Moved to: {output_path}")
 
             except Exception as e:
                 print(f"Error processing {filename}: {e}")
